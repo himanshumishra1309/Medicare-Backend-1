@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+sqlalchemy
+psycopg2-binary  # PostgreSQL adapter for Python
+pydantic
+python-dotenv  # If you're using environment variables
