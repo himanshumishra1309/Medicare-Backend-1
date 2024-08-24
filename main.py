@@ -49,7 +49,7 @@ app.add_middleware(
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
-)
+) 
 
 # Signup part for doctor
 @app.post('/doctor')
