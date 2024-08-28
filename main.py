@@ -45,7 +45,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["medicare-frontend-kaeh3122n-himanshu-mishras-projects-2e5f4b1d.vercel.app", "https://medicare-frontend-lyart.vercel.app/"],  # List of allowed origins
+    allow_origins=["*"],  # List of allowed origins
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
