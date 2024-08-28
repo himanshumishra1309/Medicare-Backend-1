@@ -63,7 +63,6 @@ def create_doctor(request: Doctor, db: Session = Depends(database.get_db)):
 
 @app.post('/student')
 def create_student(request: Student, db: Session = Depends(database.get_db)):
-    # Directly store the plain password (NOT recommended in a real-world scenario)
     student_data = request.dict()
     student_data["hashed_password"] = student_data.pop("password")  # Rename key
     new_student = models.Student_Info(**student_data)
@@ -71,6 +70,7 @@ def create_student(request: Student, db: Session = Depends(database.get_db)):
     db.commit()
     db.refresh(new_student)
     return new_student
+
 
 
 # Fetching doctors on the basis of their IDs
