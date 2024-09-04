@@ -45,11 +45,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # List of allowed origins
+    allow_origins=["https://medicare-frontend-lyart.vercel.app"],  # Specify your frontend's URL
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods
     allow_headers=["*"],  # Allow all headers
-) 
+)
 
 # Signup part for doctor
 @app.post('/doctor')
