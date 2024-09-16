@@ -25,7 +25,7 @@ class Student_Info(database.Base):
     roll_no = Column(String, unique=True, index=True, nullable=False)
     year = Column(String, unique=True, index=True, nullable=False)
     hostel = Column(String, index=True)
-    room_no = Column(Integer, index=True)
+    room_no = Column(String, index=True)
     hashed_password = Column(String)
     is_active = Column(Boolean, server_default='TRUE')
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'))

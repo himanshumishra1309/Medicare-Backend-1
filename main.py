@@ -24,7 +24,7 @@ class Student(BaseModel):
     roll_no: str
     year: str
     hostel: str
-    room_no: int
+    room_no: str
     password: str
 
 
