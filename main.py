@@ -1,7 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from typing import Optional
 from fastapi.middleware.cors import CORSMiddleware 
-from passlib.context import CryptContext 
 import models
 import database
 from sqlalchemy.orm import Session
@@ -254,35 +253,20 @@ def doctor_login(email: str, password: str, db: Session = Depends(database.get_d
     return doctor
 
 
-# Initialize the password context
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
-
-# Function to verify password
-def verify_password(plain_password, hashed_password):
-    return pwd_context.verify(plain_password, hashed_password)
-
-# Update your login route to POST
-@app.post('/student_login/')
-def student_login(request: dict, db: Session = Depends(database.get_db)):
-    email = request.get('email')
-    password = request.get('password')
-    
+@app.get('/student_login/{email},{password}')
+def student_login(email: str, password: str, db: Session = Depends(database.get_db)):
     student = db.query(models.Student_Info).filter(models.Student_Info.email == email).first()
-    
     if student is None:
         raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND,
+            status_code=status.HTTP_404_NOT_FOUND, 
             detail=f"Student with email {email} not found"
-        )
-    
-    if not verify_password(password, student.hashed_password):
+            )
+    if student.hashed_password != password:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect password"
         )
-    
     return student
-
 
 
 @app.post('/appointment')
