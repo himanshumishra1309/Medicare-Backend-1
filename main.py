@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException, status
 from typing import Optional
-from fastapi.middleware.cors import CORSMiddleware 
+from fastapi.middleware.cors import CORSMiddleware
+import bcrypt
 import models
 import database
 from sqlalchemy.orm import Session
@@ -244,12 +245,15 @@ def doctor_login(email: str, password: str, db: Session = Depends(database.get_d
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, 
             detail=f"Doctor with email {email} not found"
-            )
-    if doctor.hashed_password != password:
+        )
+    
+    # Use bcrypt's check_password_hash to verify the password
+    if not bcrypt.checkpw(password.encode('utf-8'), doctor.hashed_password.encode('utf-8')):
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Incorrect password"
         )
+    
     return doctor
 
 
